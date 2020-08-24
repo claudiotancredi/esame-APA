@@ -15,13 +15,13 @@ int main(int argc, char *argv[]){
     scanf("%d", &j);
     if (j<0)
         exit(1);
-	/*Call function to complete request 2, k-core*/
+/*Call function to complete request 2, k-core*/
     kcore(G, j, &ok);
     printf("Inserire un intero j maggiore o uguale a 1.\n");
     scanf("%d", &j);
     if (j<1)
         exit(1);
-	/*Call function to complete request 3, j-edge connected*/
+/*Call function to complete request 3, j-edge connected*/
     jedgeconnected(G, j);
     GRAPHfree(G);
     return 0;
