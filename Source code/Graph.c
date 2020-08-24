@@ -5,17 +5,18 @@
 
 #define MAXC 11
 
-//funzioni interne standard
+/*Internal standard functions*/
 static Edge  EDGEcreate(int v, int w);
 static int **MATRIXint(int r, int c, int val);
 static void  insertE(Graph G, Edge e);
 static void  removeE(Graph G, Edge e);
 static void dfsRcc(Graph G, int v, int id, int *cc);
 
-//funzioni interne non standard
+/*Internal non standard functions*/
 int comb_sempl(int pos, Edge *val, Edge *vett, int n, int k, int start, int ok, Graph G);
 static int *VETTint(int v, int val);
 
+/*Data structure for Graph -> see report for further informations*/
 struct graph{
     int V;
     int E;
@@ -142,6 +143,7 @@ void  GRAPHedges(Graph G, Edge *a) {
         a[E++] = EDGEcreate(v, w);
 }
 
+/*Custom function to complete request 3 by means of comb_sempl function below*/
 void jedgeconnected(Graph G, int j){
     int i, cc=1, ok=1, k;
     Edge *vett, *val;
@@ -217,6 +219,7 @@ static void dfsRcc(Graph G, int v, int id, int *cc) {
   }
 }
 
+/*Custom function to complete request 2*/
 void kcore(Graph G, int k, int *ok){
     int i, j, degree;
     int *v=calloc(G->V,sizeof(int));

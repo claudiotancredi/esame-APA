@@ -5,6 +5,7 @@
 
 struct symboltable {char **a; int maxN; int N;};
 
+/*Initialize data structures for symbol table*/
 ST STinit(int maxN) {
   ST st;
   st = malloc(sizeof (*st));
@@ -18,6 +19,7 @@ ST STinit(int maxN) {
   return st;
 }
 
+/*Free memory previously allocated*/
 void STfree(ST st) {
   int i;
   for (i=0; i<st->N; i++)
@@ -27,6 +29,7 @@ void STfree(ST st) {
   free(st);
 }
 
+/*Insert new string in symbol table*/
 void STinsert(ST st, char *str) {
   if (st->N+1 >= st->maxN) {
     st->a = realloc(st->a, (2*st->maxN)*sizeof(char *));
@@ -38,6 +41,7 @@ void STinsert(ST st, char *str) {
   st->N++;
 }
 
+/*Search by string -> return index*/
 int STsearch(ST st, char *str) {
   int i;
   for (i = 0; i  < st->N; i++)
@@ -46,6 +50,7 @@ int STsearch(ST st, char *str) {
   return -1;
 }
 
+/*Search by index -> return string*/
 char *STsearchByIndex(ST st, int i){
   if (i < 0 || i >= st->N)
     return NULL;

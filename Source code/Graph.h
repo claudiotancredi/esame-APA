@@ -1,6 +1,8 @@
 #ifndef GRAPH_H_INCLUDED
 #define GRAPH_H_INCLUDED
 
+/*Header file for standard first-class ADT Graph*/
+
 #include "ST.h"
 
 typedef struct {
@@ -29,6 +31,7 @@ void   GRAPHmstP(Graph G);
 void   GRAPHspD(Graph G, int id);
 void   GRAPHspBF(Graph G, int id);
 
+/*Custom internal functions*/
 void jedgeconnected(Graph G, int j);
 void kcore(Graph G, int k, int *ok);
 

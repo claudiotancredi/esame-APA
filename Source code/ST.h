@@ -1,6 +1,8 @@
 #ifndef ST_H_INCLUDED
 #define ST_H_INCLUDED
 
+/*Header file for standard first-class ADT symbol table*/
+
 typedef struct symboltable *ST;
 
 ST    STinit(int maxN);
