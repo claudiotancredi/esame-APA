@@ -26,6 +26,7 @@ struct graph{
     ST st;
 };
 
+/*Data structure for edge*/
 static Edge EDGEcreate(int v, int w) {
   Edge e;
   e.v = v;
@@ -33,6 +34,7 @@ static Edge EDGEcreate(int v, int w) {
   return e;
 }
 
+/*Function to allocate and initialize adjacency matrix*/
 static int **MATRIXint(int r, int c, int val) {
   int i, j;
   int **t = malloc(r * sizeof(int *));
@@ -50,6 +52,7 @@ static int **MATRIXint(int r, int c, int val) {
   return t;
 }
 
+/*Function to allocate and initialize custom array for vertices marking*/
 static int *VETTint(int v, int val){
     int i;
     int *vett;
@@ -61,6 +64,7 @@ static int *VETTint(int v, int val){
     return vett;
 }
 
+/*Function to allocate and initialize graph data structure*/
 Graph GRAPHinit(int V) {
   Graph G = malloc(sizeof *G);
   if (G == NULL)
@@ -76,6 +80,7 @@ Graph GRAPHinit(int V) {
   return G;
 }
 
+/*Function to deallocate graph data structure*/
 void GRAPHfree(Graph G) {
   int i;
   for (i=0; i<G->V; i++)
@@ -88,6 +93,7 @@ void GRAPHfree(Graph G) {
   free(G);
 }
 
+/*Function to read graph informations from file and store them*/
 Graph GRAPHload(FILE *fin) {
   int V, i, id1, id2;
   char label1[MAXC], label2[MAXC];
@@ -110,7 +116,8 @@ Graph GRAPHload(FILE *fin) {
   return G;
 }
 
-static void  insertE(Graph G, Edge e) {
+/*Function to store an edge in adjacency matrix*/
+static void insertE(Graph G, Edge e) {
   int v = e.v, w = e.w;
 
   if (G->madj[v][w] == 0)
@@ -119,14 +126,17 @@ static void  insertE(Graph G, Edge e) {
   G->madj[w][v] = 1;
 }
 
+/*Wrapper function for insertE*/
 void GRAPHinsertE(Graph G, int id1, int id2) {
   insertE(G, EDGEcreate(id1, id2));
 }
 
+/*Wrapper function for removeE*/
 void GRAPHremoveE(Graph G, int id1, int id2) {
   removeE(G, EDGEcreate(id1, id2));
 }
 
+/*Function to remove an edge from adjacency matrix*/
 static void  removeE(Graph G, Edge e) {
   int v = e.v, w = e.w;
   if (G->madj[v][w] == 1)
@@ -135,6 +145,7 @@ static void  removeE(Graph G, Edge e) {
   G->madj[w][v] = 0;
 }
 
+/*Function to extract an array of edges from graph data structure*/
 void  GRAPHedges(Graph G, Edge *a) {
   int v, w, E = 0;
   for (v=0; v < G->V; v++)
@@ -157,10 +168,10 @@ void jedgeconnected(Graph G, int j){
             exit(1);
         cc=comb_sempl(0, val, vett, G->E, i, 0, ok, G);
         if (cc==0 && i<j)
-            printf("Esiste un insieme di archi di cardinalità < j che sconnette il grafo. "
-                   "Grafo non j-edge-connected.\n");
+            printf("There is at least one edges' subset of cardinality < j able to disconnect the graph. "
+                   "The graph is not j-edge-connected.\n");
         else if (cc==0 && i>=j){
-            printf("Grafo j-edge-connected. Archi che lo sconnettono:\n");
+            printf("The graph is j-edge-connected. List of edges that disconnect it:\n");
             for (k=0; k<i; k++){
                 printf("(%s, %s)\n", STsearchByIndex(G->st, vett[k].v), STsearchByIndex(G->st, vett[k].w));
             }
@@ -193,6 +204,7 @@ int comb_sempl(int pos, Edge *val, Edge *vett, int n, int k, int start, int ok, 
     return ok;
 }
 
+/*Wrapper function to compute connected components by means of DFS*/
 int GRAPHcc(Graph G) {
   int v, id = 0, *cc;
   cc = malloc(G->V * sizeof(int));
@@ -208,6 +220,7 @@ int GRAPHcc(Graph G) {
   return id;
 }
 
+/*Function to execute DFS*/
 static void dfsRcc(Graph G, int v, int id, int *cc) {
   int i;
   cc[v] = id;
@@ -259,10 +272,10 @@ void kcore(Graph G, int k, int *ok){
     }
     *ok=1;
     if (G->nV==0){
-        printf("Non ci sono vertici che formano il k-core!\n");
+        printf("The k-core is empty.\n");
     }
     else{
-        printf("Vertici del k-core:\n");
+        printf("K-core vertices:\n");
         for (i=0; i<G->V; i++){
             if (G->vertex[i]==1){
                 printf("%s\n", STsearchByIndex(G->st, i));
